@@ -1,5 +1,5 @@
 # political_affiliation_text_classifier
- 
+
 ## Summary
 
 This project classifies text obtained from 23 Subreddits, categorized into 4 political affliations: Left, Center, Right, Alt.
@@ -27,4 +27,4 @@ To run the code, the following data needs to be downloaded and stored in the app
 `preproc.py` pre-processes the original text data and outputs a file containing the pre-processed text. `extract_features.py` takes the pre-processed text and extracts the relevant features for the text. `classify.py` deploys multiple machine learning models to classify the text and acts as the experiment pipeline.
 
 ## Documentation
-Coming soon...
+Detailed documentation of the method and results may be found <a href="https://medium.com/@arnoldyeung/using-machine-learning-to-identify-political-affiliations-in-reddit-posts-9636fbbdd8ab?sk=55352d8682ea333cc9a508b0e12b0d03">here</a> on Medium.
