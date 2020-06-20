@@ -21,7 +21,7 @@ The following dependencies are used:
 To run the code, the following data needs to be downloaded and stored in the appropriate directory:
 - <a href="https://drive.google.com/drive/folders/1kiWXg8xyPoQik2goDtIDByh1JvsNj9C8?usp=sharing">Text data</a> in `./data/`
 - <a href="https://drive.google.com/drive/folders/1QkxOINiFj-yqlgQp13TZiaEWUSiGqhzp?usp=sharing">Wordlists</a> in `./Wordlists/`
-- <a href="https://drive.google.com/drive/folders/1kiWXg8xyPoQik2goDtIDByh1JvsNj9C8?usp=sharing">Pre-processed psychological features</a> in `./feats/`
+- <a href="https://drive.google.com/drive/folders/1febHYW0F81M7BHiiX3JoibRuhxkPPIjx?usp=sharing">Pre-processed psychological features</a> in `./feats/`
 
 ## Run
 `preproc.py` pre-processes the original text data and outputs a file containing the pre-processed text. `extract_features.py` takes the pre-processed text and extracts the relevant features for the text. `classify.py` deploys multiple machine learning models to classify the text and acts as the experiment pipeline.
