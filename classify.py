@@ -7,7 +7,7 @@ Description: Conduct classification tests with multiple classifiers
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.feature_selection import chi2
-from sklearn import svm, metrics, ensemble, neural_network
+from sklearn import svm, metrics, ensemble, neural_network, naive_bayes
 from scipy import stats
 import numpy as np
 import argparse
@@ -58,21 +58,33 @@ def classify(classifier, X_train, X_test, y_train, y_test):
     elif classifier == 'adaboost':
         clf = ensemble.AdaBoostClassifier()
         clf_tag = 5
+    elif classifier == 'bagging_mlp':
+        clf = ensemble.BaggingClassifier(neural_network.MLPClassifier(alpha=0.05), 
+                                         n_estimators=10)
+        clf_tag = 6
+    elif classifier == 'gaussian_nb':
+        clf = naive_bayes.GaussianNB()
+        clf_tag = 7
+    elif classifier == 'mlp_3_layer':
+        clf = neural_network.MLPClassifier(hidden_layer_sizes=(100, 100, 50), 
+                                           activation='relu',
+                                           alpha=0.05)
+        clf_tag = 8
     else:
         print('Classifier not found.  Using Linear SVM...')
         clf = svm.SVC(kernel='linear')
         clf_tag = 0
     
-    print(datetime.datetime.now())
-    print("Fitting classifier...")
+    #   print(datetime.datetime.now())
+    #   print("Fitting classifier...")
     clf.fit(X_train, y_train)
-    print("Predicting test data...")
+    #   print("Predicting test data...")
     y_predict = clf.predict(X_test)
     
     #   confusion matrix where row = true label, col = predicted label
     C = metrics.confusion_matrix(y_test, y_predict, labels=[0, 1, 2, 3])
-    print(C)
-    print(datetime.datetime.now())
+    #   print(C)
+    #   print(datetime.datetime.now())
     
     return C, y_predict, clf_tag
 
@@ -120,7 +132,9 @@ def class31(filename):
     safe_mode = False
     iBest = 0
     bestAcc = 0
-    clfs = ['lin_svm', 'radial_svm', 'random_forest', 'mlp', 'adaboost']
+    clfs = ['lin_svm', 'radial_svm', 'random_forest', 'mlp', 'adaboost', 
+            'bagging_mlp', 'gaussian_nb', 'mlp_3_layer']
+    #   clfs = ['mlp_3_layer']
     
     npz_data = np.load(filename)
     data = npz_data['arr_0']
@@ -197,7 +211,10 @@ def class32(X_train, X_test, y_train, y_test,iBest):
                     2: 'radial_svm',
                     3: 'random_forest',
                     4: 'mlp',
-                    5: 'adaboost'}
+                    5: 'adaboost',
+                    6: 'bagging_mlp',
+                    7: 'gaussian_nb',
+                    8: 'mlp_3_layer'}
     report = []
    
     #    number of training samples per trial
@@ -263,7 +280,10 @@ def class33(X_train, X_test, y_train, y_test, i, X_1k, y_1k):
                     2: 'radial_svm',
                     3: 'random_forest',
                     4: 'mlp',
-                    5: 'adaboost'}
+                    5: 'adaboost',
+                    6: 'bagging_mlp',
+                    7: 'gaussian_nb',
+                    8: 'mlp_3_layer'}
     
     print('Calculating p-values for different numbers of top features on 1k training dataset...')
     save_p_file = 'a1_3.3_pvalue_1k.csv'
@@ -369,7 +389,10 @@ def class34( filename, i ):
                     2: 'radial_svm',
                     3: 'random_forest',
                     4: 'mlp',
-                    5: 'adaboost'}
+                    5: 'adaboost',
+                    6: 'bagging_mlp',
+                    7: 'gaussian_nb',
+                    8: 'mlp_3_layer'}
     
     #   create dictionary to store classification accuracies per fold
     clf_accuracies = {}
@@ -428,7 +451,6 @@ def class34( filename, i ):
         writer = csv.writer(csvFile)
         writer.writerows(report)
     csvFile.close()
-        
     
 
 def main( args ):
